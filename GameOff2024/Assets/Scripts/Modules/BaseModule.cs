@@ -5,18 +5,21 @@ using UnityEngine;
 
 public abstract class BaseModule : MonoBehaviour
 {
-    private TMP_Text output;
+    protected TMP_Text output;
+    protected NetworkManager networkManager;
+
+    public void Start()
+    {
+        networkManager = FindObjectOfType<NetworkManager>();
+    }
 
     public abstract void ProcessCommand(string[] args);
 
-    public virtual bool ValidateArgs(string[] args) => args != null && args.Length > 0;
-
     public virtual string[] ParseArguments(string command) => command.Split(' ');
 
-    public virtual void SendFeedback(string message) => output.text += message;
+    public virtual void SendFeedback(string message) => output.text += "\n" + message; // + "\n";
 
     public virtual void SetOutput(TMP_Text output) => this.output = output;
 
-
-
 }
+
